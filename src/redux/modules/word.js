@@ -15,6 +15,7 @@ import {db} from "../../firebase";
 // Actions
 const LOAD = 'word/LOAD';
 const CREATE = 'word/CREATE';
+const UPDATE = 'word/UPDATE';
 
 const initialState = {
   list: [],

@@ -24,27 +24,23 @@ const Add = (props) => {
         navigate("/");
 
     }
-
-
-
-
     
     return(
-        
+
         <Wrap>
             <Title>단어 등록하기</Title>
             <Form onSubmit={word_obj}>
                 <div>
-                    <label>단어</label>
-                    <input type="text" ref={el => inputRef.current[0] = el}/>
+                    <label for="word">단어</label>
+                    <input id="word" type="text" ref={el => inputRef.current[0] = el}/>
                 </div>
                 <div>
-                    <label>해석</label>
-                    <input type="text" ref={el => inputRef.current[1] = el}/>
+                    <label for="trans" >해석</label>
+                    <input id="trans" type="text" ref={el => inputRef.current[1] = el}/>
                 </div>
                 <div>
-                    <label>예문</label>
-                    <input type="text" ref={el => inputRef.current[2] = el}/>
+                    <label for="exam">예문</label>
+                    <input id="exam" type="text" ref={el => inputRef.current[2] = el}/>
                 </div>
                 <button type="submit" onClick={word_obj}>단어등록</button>
             </Form>

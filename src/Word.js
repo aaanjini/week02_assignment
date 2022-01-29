@@ -1,12 +1,14 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import './App.css';
 import './theme.js';
-import plus from "./Plus.png";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { loadWordFB } from "./redux/modules/word";
 
+import plus from "./Plus.png";
 import { FaCheck , FaPen , FaTimes } from "react-icons/fa";
+
 
 const Word = (props) => {
     const dispatch = useDispatch(); 
@@ -28,7 +30,9 @@ const Word = (props) => {
                                 <h3>{el.word}</h3>
                                 <div>
                                     <button><FaCheck/></button>
-                                    <button><FaPen/></button>
+                                    <Link to={{
+                                        pathname:`/add`,
+                                    }}><FaPen/></Link>
                                     <button><FaTimes/></button>
                                 </div>
                             </Title>
@@ -94,6 +98,13 @@ const Title = styled.div`
             border: none;
             font-size: 20px;
             cursor: pointer;
+        }
+        >a {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color : black;
         }
     }
     
