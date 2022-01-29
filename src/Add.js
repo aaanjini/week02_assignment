@@ -56,10 +56,13 @@ const Wrap = styled.div`
     -webkit-box-pack: center;
     justify-content: center;
     max-width: 400px;
-    margin: 50px auto;
+    margin:60px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
+    @media screen and (min-width: 1024px) {  
+        margin: 20px auto;
+    }
 `;
 
 const Title = styled.h3`
@@ -81,10 +84,10 @@ const Form = styled.form`
             height: 30px;
             background: transparent;
             border: none;
-            border-bottom: 2px solid rgba(187,231,254,0.4);
+            border-bottom: 2px solid rgba(253,127,32,0.4);
             outline: none;
             :focus {
-                border-bottom: 2px solid rgba(187,231,254,1);
+                border-bottom: 2px solid rgba(253,127,32,1);
             }
         }
         margin-bottom: 20px;
@@ -94,7 +97,7 @@ const Form = styled.form`
         height: 50px;
         font-size: 20px;
         border-radius: 10px;
-        background-color: #74BDCB;
+        background-color: #FD7F20;
         color: white;
         border:none;
         margin:40px 0;

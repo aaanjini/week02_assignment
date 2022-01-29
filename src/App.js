@@ -4,8 +4,9 @@ import styled from "styled-components";
 import './App.css';
 import Add from './Add';
 import Word from './Word';
+import tiger from './tiger.png';
+import tiger2 from './tiger2.png';
 
- 
 
 function App() {
 
@@ -20,7 +21,11 @@ function App() {
           <Route path="/" element={<Word />}/> 
           <Route path="/add" element={<Add />}/>
         </Routes>
-      </Container>      
+      </Container> 
+      <div>
+        <Tiger src={tiger}/>
+        <Tiger2 src={tiger2}/>
+      </div>    
     </div>
   );
 }
@@ -34,12 +39,11 @@ const Header = styled.header`
     left: 0px;
     z-index: 10;
     padding: 0 20px;
-    background-color: white;
+    background-color: #FD7F20;
     text-align: left;
-    border-bottom: 1px solid #ddd;
     > a {
       display: block;
-      color:#D3B5E5;
+      color:black;
       margin : 10px 0 0;
       text-decoration: none;
       > h1 {
@@ -63,4 +67,40 @@ const Container = styled.div`
     }
 `;
 
+const Tiger = styled.img`
+  position: fixed;
+  left: -40px;
+  bottom: -50px;
+  width: 200px;
+  animation-name: _scroll;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  @keyframes _scroll {
+    0% {bottom : -150px}
+    50% {bottom : -80px}
+    100% {bottom : -150px}
+  }
+  @media screen and (min-width: 768px) {  
+    width: 400px;
+    left: -80px;
+    bottom: -300px;
+    width: 400px;
+    @keyframes _scroll {
+      0% {bottom : -300px}
+      50% {bottom : -200px}
+      100% {bottom : -300px}
+    }
+  }  
+`;
+const Tiger2 = styled.img`
+    position: fixed;
+    display: none;  
+    @media screen and (min-width: 1024px) {  
+      display: block;
+      left: 38vw;
+      bottom: -120px;
+      width: 400px;
+    }
+  
+`;
 export default App;

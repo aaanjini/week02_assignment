@@ -60,16 +60,16 @@ const WordWrap = styled.div`
     width: 100%;
     padding: 20px 0px;
     @media screen and (min-width: 768px) {
-        padding: 50px 0px;
+        padding: 0;
     }  
 `;
 
 const Words = styled.div`
     width:100%;
     padding: 20px;
-    border: 2px solid #BBE7FE;
-    border-radius: 10px;
-    background-color: white;
+    border: 2px solid #FD7F20;
+    border-radius: 0 10px 10px 0;
+    background-color: #FDB750;
     transition: box-shadow 300ms ease-in-out 0s;
 
     @media screen and (min-width: 768px) {
@@ -134,7 +134,7 @@ const WordText = styled.p` //단어
     
 `;
 const Example = styled.p` //예문
-    color: #74BDCB;
+    color: #9F2B00;
     font-size: 13px;   
 `;
 const Translate = styled.p` //해석
@@ -147,7 +147,7 @@ const AddPage = styled.a`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color : #D3B5E5;
+    background-color : #FD7F20;
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -159,6 +159,7 @@ const AddPage = styled.a`
     >img {
         transition: transform 300ms ease-in-out 0s;
         width: 100%;
+        
     }
 `;
 
