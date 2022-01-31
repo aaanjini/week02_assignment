@@ -10,6 +10,7 @@ const Add = (props) => {
     const dispatch = useDispatch();
     const inputRef = useRef([]);
 
+    
     const word_obj =  (e) => {
         e.preventDefault();
 
@@ -17,13 +18,13 @@ const Add = (props) => {
         const trans = inputRef.current[1].value;
         const exam = inputRef.current[2].value;
 
-        const ref_data = {word:word, trans:trans, exam:exam};
+        const ref_data = {word:word, trans:trans, exam:exam , check: false};
 
-        //dispatch(createWord(ref_data));
         dispatch(createWordFB(ref_data));
         navigate("/");
-
     }
+
+
     
     return(
 
@@ -31,16 +32,16 @@ const Add = (props) => {
             <Title>단어 등록하기</Title>
             <Form onSubmit={word_obj}>
                 <div>
-                    <label for="word">단어</label>
-                    <input id="word" type="text" ref={el => inputRef.current[0] = el}/>
+                    <label>단어</label>
+                    <input type="text" ref={el => inputRef.current[0] = el}/>
                 </div>
                 <div>
-                    <label for="trans" >해석</label>
-                    <input id="trans" type="text" ref={el => inputRef.current[1] = el}/>
+                    <label>해석</label>
+                    <input type="text" ref={el => inputRef.current[1] = el}/>
                 </div>
                 <div>
-                    <label for="exam">예문</label>
-                    <input id="exam" type="text" ref={el => inputRef.current[2] = el}/>
+                    <label>예문</label>
+                    <input type="text" ref={el => inputRef.current[2] = el}/>
                 </div>
                 <button type="submit" onClick={word_obj}>단어등록</button>
             </Form>

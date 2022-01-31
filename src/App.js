@@ -5,7 +5,6 @@ import './App.css';
 import Add from './Add';
 import Word from './Word';
 import tiger from './tiger.png';
-import tiger2 from './tiger2.png';
 
 
 function App() {
@@ -19,12 +18,12 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Word />}/> 
-          <Route path="/add" element={<Add />}/>
+          <Route path="/add" element={<Add />} />
+          <Route path="/add/:id" element={<Add />}/>
         </Routes>
       </Container> 
       <div>
         <Tiger src={tiger}/>
-        <Tiger2 src={tiger2}/>
       </div>    
     </div>
   );
@@ -92,15 +91,5 @@ const Tiger = styled.img`
     }
   }  
 `;
-const Tiger2 = styled.img`
-    position: fixed;
-    display: none;  
-    @media screen and (min-width: 1024px) {  
-      display: block;
-      left: 38vw;
-      bottom: -120px;
-      width: 400px;
-    }
-  
-`;
+
 export default App;

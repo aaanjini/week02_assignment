@@ -4,7 +4,7 @@ import './theme.js';
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { loadWordFB } from "./redux/modules/word";
+import { loadWordFB , checkWordFB} from "./redux/modules/word";
 
 import plus from "./Plus.png";
 import { FaCheck , FaPen , FaTimes } from "react-icons/fa";
@@ -14,6 +14,10 @@ const Word = (props) => {
     const dispatch = useDispatch(); 
 
     const wordList = useSelector(state => state.word.list);
+
+    const check_word = (word_id) =>{
+        dispatch(checkWordFB(word_id));
+    }
     
     React.useEffect( () => {
         dispatch(loadWordFB());
@@ -25,13 +29,13 @@ const Word = (props) => {
             <WordWrap>
                 {wordList.map((el,idx) => {
                     return(
-                        <Words key={idx} className="card">
+                        <Words key={idx} check={el.check} className="card">
                             <Title>
                                 <h3>{el.word}</h3>
                                 <div>
-                                    <button><FaCheck/></button>
+                                    <button onClick={()=>{check_word(el.id)}}><FaCheck/></button>
                                     <Link to={{
-                                        pathname:`/add`,
+                                        pathname:`/add/:${el.id}`,
                                     }}><FaPen/></Link>
                                     <button><FaTimes/></button>
                                 </div>
@@ -69,15 +73,24 @@ const Words = styled.div`
     padding: 20px;
     border: 2px solid #FD7F20;
     border-radius: 0 10px 10px 0;
-    background-color: #FDB750;
+    background-color: ${(props) => (props.check ? "black" : "#FDB750")};    
     transition: box-shadow 300ms ease-in-out 0s;
 
+    >div > div {
+        button,a {
+            color : ${(props) => (props.check ? "white" : "black")} ;
+        }
+    }
+    >div {
+        > h3 {color : ${(props) => (props.check ? "white" : "black")} ;}
+        > p { color : ${(props) => (props.check ? "white" : "black")} ;}
+    }
     @media screen and (min-width: 768px) {
         width: calc((100% - 20px) / 2);
     }  
     @media screen and (min-width: 1024px) {
         width : calc((100% - 40px) / 3);
-    }    
+    }
 `;
 
 const Title = styled.div`
@@ -86,7 +99,7 @@ const Title = styled.div`
         width: 70%;
         display: inline-block;
         margin: 0;
-        vertical-align: super;
+        vertical-align: super;        
     }
     >div {
         display: inline-block;
@@ -124,15 +137,13 @@ const Buttons = styled.div`
 const Text = styled.div`
     >p {
         margin: 10px 0;
+        
     }
     >hr {
         margin-bottom: 20px;
     }
 `;
 
-const WordText = styled.p` //단어
-    
-`;
 const Example = styled.p` //예문
     color: #9F2B00;
     font-size: 13px;   

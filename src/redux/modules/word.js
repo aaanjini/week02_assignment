@@ -16,6 +16,7 @@ import {db} from "../../firebase";
 const LOAD = 'word/LOAD';
 const CREATE = 'word/CREATE';
 const UPDATE = 'word/UPDATE';
+const CHECK = 'word/CHECK';
 
 const initialState = {
   list: [],
@@ -29,6 +30,10 @@ export const createWord = (data) => {
   return { type: CREATE, data };
 };
 
+export const checkWord = (word_id) => {
+  return { type: CHECK, word_id };
+};
+
 
 // 파이어베이스랑 통신하는 부분
 export const loadWordFB = () => {
@@ -39,7 +44,7 @@ export const loadWordFB = () => {
     let word_list = [];
 
     word_data.forEach((word)=>{
-      word_list.push({...word.data()});
+      word_list.push({id:word.id,...word.data()});
     });
 
     dispatch(loadWord(word_list));
@@ -54,8 +59,24 @@ export const createWordFB = (word) => {
 
     dispatch(createWord(word_data));
   }
+}
+
+export const checkWordFB = (word_id) => {
+  return async function (dispatch, getState) {    
+    const docRef = doc(db,"word", word_id);
+    const word_index = getState().word.list.findIndex((w)=>{
+        return w.id === word_id
+    });
+    console.log(word_index);
+    //await updateDoc(docRef, {check : true});
+    await updateDoc(docRef,{check : !getState().word.list[word_index].check});
+    
+    dispatch(checkWord(word_index));
+
+  }
 
 }
+
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -64,6 +85,13 @@ export default function reducer(state = initialState, action = {}) {
       return {list : action.word_list};
     case "word/CREATE":      
       return {list: [...state.list,action.data]};
+    case "word/CHECK":{      
+      const new_word = state.list.map((val,index) => {
+          return index !==action.word_index?val:{...val, check : !val.check};
+      });
+      return {...state,list : [...new_word]};
+        
+    }
 
     default: 
       return state;
