@@ -133,7 +133,7 @@ export default function reducer(state = initialState, action = {}) {
     }
     case "word/CHECK": {
       const new_word_list = state.list.map((el) => {
-          return el.id !== action.id ?  el :  { ...el, check: !el.check };
+          return el.id !== action.word_id ?  el :  { ...el, check: !el.check };
       })
       return { list: [...new_word_list] };
     }

@@ -20,7 +20,8 @@ function App() {
   return (
     <div className="App">
       <Header>
-          <Link to="/"><h1>Vocabulary</h1></Link>
+          <Link className="head_title" to="/"><h1>Vocabulary</h1></Link>
+          <Go href='/add'>단어추가</Go>
       </Header>
       <Container>
         <Routes>
@@ -47,7 +48,7 @@ const Header = styled.header`
     padding: 0 20px;
     background-color: #FD7F20;
     text-align: left;
-    > a {
+    > .head_title {
       display: block;
       color:black;
       margin : 10px 0 0;
@@ -55,7 +56,27 @@ const Header = styled.header`
       > h1 {
         margin:0;
       }
-    }    
+    }
+`;
+
+const Go = styled.a`
+  width: 80px;
+  height: 40px;
+  background-color: black;
+  color: #fd7f20;
+  display: block;
+  position: fixed;
+  right: 20px;
+  top: 10px;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 10px;
+  z-index: 2;
+  text-decoration: none;
+  cursor: pointer;  
+  @media screen and (min-width: 1024px) {  
+    display: none;
+  }
 `;
 
 const Container = styled.div`

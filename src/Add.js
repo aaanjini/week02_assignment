@@ -10,10 +10,10 @@ const Add = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const inputRef = useRef([]);
-
-    const word_id = params.id;
-    const data = useSelector(state => state.word.list).find(a => a.id === word_id);
+    const word_id = params.id;    
+    let word_data = useSelector(state => state.word.list).find(a => a.id === word_id);
     
+    console.log(word_data);
 
     const word_obj =  (e) => {
         e.preventDefault();
@@ -38,7 +38,7 @@ const Add = (props) => {
         const trans = inputRef.current[1].value;
         const exam = inputRef.current[2].value;
 
-        const ref_data = {id:word_id ,word:word, trans:trans, exam:exam};
+        let ref_data = {id:word_id ,word:word, trans:trans, exam:exam};
 
         dispatch(updateWordFB(ref_data));
         window.alert("단어 수정 완료");
@@ -54,15 +54,15 @@ const Add = (props) => {
             <Form onSubmit={word_obj}>
                 <div>
                     <label>단어</label>
-                    <input type="text" ref={el => inputRef.current[0] = el}/>
+                    <input type="text" ref={el => inputRef.current[0] = el} defaultValue={word_data?word_data.word : null}/>
                 </div>
                 <div>
                     <label>해석</label>
-                    <input type="text" ref={el => inputRef.current[1] = el}/>
+                    <input type="text" ref={el => inputRef.current[1] = el} defaultValue={word_data?word_data.trans : null}/>
                 </div>
                 <div>
                     <label>예문</label>
-                    <input type="text" ref={el => inputRef.current[2] = el}/>
+                    <input type="text" ref={el => inputRef.current[2] = el} defaultValue={word_data?word_data.exam : null}/>
                 </div>
                 {props.type === 'add' ? 
                     <button type="submit" onClick={word_obj}>단어등록</button> :

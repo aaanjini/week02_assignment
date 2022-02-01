@@ -36,7 +36,7 @@ const Word = (props) => {
                                 <div>
                                     <button onClick={()=>{check_word(el)}}><FaCheck/></button>
                                     <Link to={{
-                                        pathname:`/add/:${el.id}`,
+                                        pathname:`/add/${el.id}`,
                                     }}><FaPen/></Link>
                                     <button><FaTimes onClick={()=>{
                                         delete_word(el.id)
@@ -44,8 +44,8 @@ const Word = (props) => {
                                 </div>
                             </Title>
                             <Text>
-                                <Translate>{el.trans}</Translate>
-                                <Example>{el.exam}</Example>
+                                <p>{el.trans}</p>
+                                <p className="ex">{el.exam}</p>
                             </Text>
                         </Words>
                     );
@@ -90,6 +90,10 @@ const Words = styled.div`
     >div {
         > h3 {color : ${(props) => (props.check ? "white" : "black")} ;}
         > p { color : ${(props) => (props.check ? "white" : "black")} ;}
+        > p.ex { 
+            font-size: 13px;   
+            color : ${(props) => (props.check ? "white" : "#9F2B00")} ;
+        }
     }
     @media screen and (min-width: 768px) {
         width: calc((100% - 20px) / 2);
@@ -150,17 +154,8 @@ const Text = styled.div`
     }
 `;
 
-const Example = styled.p` //예문
-    color: #9F2B00;
-    font-size: 13px;   
-`;
-const Translate = styled.p` //해석
-    
-`;
-
-
 const AddPage = styled.a`
-    display: block;
+    display: none;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -177,6 +172,9 @@ const AddPage = styled.a`
         transition: transform 300ms ease-in-out 0s;
         width: 100%;
         
+    }
+    @media screen and (min-width: 1024px) {  
+        display: block;
     }
 `;
 
