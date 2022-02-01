@@ -1,16 +1,20 @@
 import React from "react";
 import { useRef } from "react";
-import { useDispatch } from 'react-redux'; 
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'; 
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { createWord , createWordFB } from "./redux/modules/word";
+import { createWordFB, updateWordFB } from "./redux/modules/word";
 
 const Add = (props) => {
+    const params = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const inputRef = useRef([]);
 
+    const word_id = params.id;
+    const data = useSelector(state => state.word.list).find(a => a.id === word_id);
     
+
     const word_obj =  (e) => {
         e.preventDefault();
 
@@ -21,7 +25,24 @@ const Add = (props) => {
         const ref_data = {word:word, trans:trans, exam:exam , check: false};
 
         dispatch(createWordFB(ref_data));
+        window.alert("단어 등록 완료");
         navigate("/");
+
+        
+    }
+
+    const edit_word =  (e) => {
+        e.preventDefault();
+
+        const word = inputRef.current[0].value;
+        const trans = inputRef.current[1].value;
+        const exam = inputRef.current[2].value;
+
+        const ref_data = {id:word_id ,word:word, trans:trans, exam:exam};
+
+        dispatch(updateWordFB(ref_data));
+        window.alert("단어 수정 완료");
+        navigate("/");        
     }
 
 
@@ -29,7 +50,7 @@ const Add = (props) => {
     return(
 
         <Wrap>
-            <Title>단어 등록하기</Title>
+            {props.type === 'add' ? <Title>단어 등록하기</Title> : <Title>단어 수정하기</Title>}
             <Form onSubmit={word_obj}>
                 <div>
                     <label>단어</label>
@@ -43,7 +64,11 @@ const Add = (props) => {
                     <label>예문</label>
                     <input type="text" ref={el => inputRef.current[2] = el}/>
                 </div>
-                <button type="submit" onClick={word_obj}>단어등록</button>
+                {props.type === 'add' ? 
+                    <button type="submit" onClick={word_obj}>단어등록</button> :
+                    <button type="submit" onClick={edit_word}>단어수정</button>
+                }
+                
             </Form>
         </Wrap>        
     );

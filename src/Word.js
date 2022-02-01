@@ -2,9 +2,9 @@ import React from "react";
 import './App.css';
 import './theme.js';
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { loadWordFB , checkWordFB} from "./redux/modules/word";
+import { loadWordFB , checkWordFB , deleteWordFB} from "./redux/modules/word";
 
 import plus from "./Plus.png";
 import { FaCheck , FaPen , FaTimes } from "react-icons/fa";
@@ -12,17 +12,18 @@ import { FaCheck , FaPen , FaTimes } from "react-icons/fa";
 
 const Word = (props) => {
     const dispatch = useDispatch(); 
-
+    const navigate = useNavigate();
     const wordList = useSelector(state => state.word.list);
 
     const check_word = (word_id) =>{
         dispatch(checkWordFB(word_id));
-    }
-    
-    React.useEffect( () => {
-        dispatch(loadWordFB());
-    }, []);
+    }   
 
+    const delete_word = (word_id) => {
+        dispatch(deleteWordFB(word_id));
+        window.alert("단어 삭제 완료");
+        navigate("/");
+    }
 
     return(
         <div>
@@ -33,11 +34,13 @@ const Word = (props) => {
                             <Title>
                                 <h3>{el.word}</h3>
                                 <div>
-                                    <button onClick={()=>{check_word(el.id)}}><FaCheck/></button>
+                                    <button onClick={()=>{check_word(el)}}><FaCheck/></button>
                                     <Link to={{
                                         pathname:`/add/:${el.id}`,
                                     }}><FaPen/></Link>
-                                    <button><FaTimes/></button>
+                                    <button><FaTimes onClick={()=>{
+                                        delete_word(el.id)
+                                    }}/></button>
                                 </div>
                             </Title>
                             <Text>
@@ -79,6 +82,9 @@ const Words = styled.div`
     >div > div {
         button,a {
             color : ${(props) => (props.check ? "white" : "black")} ;
+        }
+        a {
+            margin: 0 10px;
         }
     }
     >div {

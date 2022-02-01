@@ -1,15 +1,22 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 import {Route,Routes, Link} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styled from "styled-components";
 import './App.css';
 import Add from './Add';
 import Word from './Word';
 import tiger from './tiger.png';
+import { async } from '@firebase/util';
 
+import {loadWordFB} from './redux/modules/word';
 
 function App() {
+  const dispatch = useDispatch(); 
 
-  
+  React.useEffect(async() => {
+      dispatch(loadWordFB());
+  }, []);
+
   return (
     <div className="App">
       <Header>
@@ -18,8 +25,8 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Word />}/> 
-          <Route path="/add" element={<Add />} />
-          <Route path="/add/:id" element={<Add />}/>
+          <Route path="/add" element={<Add type="add"/>} />
+          <Route path="/add/:id" element={<Add type="edit"/>}/>
         </Routes>
       </Container> 
       <div>
