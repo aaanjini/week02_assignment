@@ -7,6 +7,9 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  orderBy,
+  Timestamp, 
+  query
 } from "firebase/firestore";
 
 import {db} from "../../firebase";
@@ -50,7 +53,8 @@ export const deleteWord = (word_index) => {
 export const loadWordFB = () => {
   return async function (dispatch) {
     // 데이터를 가져와요!
-    const word_data = await getDocs(collection(db, "word"));
+    const query_data = query(collection(db, "word"), orderBy("time", "desc"))
+    const word_data = await getDocs(query_data);
 
     let word_list = [];
 
@@ -61,17 +65,22 @@ export const loadWordFB = () => {
     dispatch(loadWord(word_list));
   }
 }
-
+//단어등록
 export const createWordFB = (word) => {
   return async function (dispatch) {
-    const docRef = await addDoc(collection(db, "word"), word);
+    const docData = {
+      ...word,
+      check: false,
+      time: Timestamp.fromDate(new Date())
+    }
+    const docRef = await addDoc(collection(db, "word"), docData);
     const _word = await getDoc(docRef);
     const word_data = {id:_word.id , ..._word.data() , check:false};
 
     dispatch(createWord(word_data));
   }
 }
-
+//단어수정
 export const updateWordFB = (word_data) => {
   return async function (dispatch, getState) {    
     const docRef = doc(db,"word", word_data.id);
@@ -97,7 +106,7 @@ export const checkWordFB = (el) => {
   }
 }
 
-
+//단어삭제
 export const deleteWordFB = (word_id) => {
   return async function (dispatch , getState) {
     if(!word_id){

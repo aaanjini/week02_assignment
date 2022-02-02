@@ -22,7 +22,7 @@ const Add = (props) => {
         const trans = inputRef.current[1].value;
         const exam = inputRef.current[2].value;
 
-        const ref_data = {word:word, trans:trans, exam:exam , check: false};
+        const ref_data = {word:word, trans:trans, exam:exam , check: false, date: Date.now()};
 
         dispatch(createWordFB(ref_data));
         window.alert("단어 등록 완료");
